@@ -10,26 +10,18 @@ A simple program to remove the watermark from a PDF file.
 4. save the modified images
 
 
-### Environment
+### How to use?
 
 First you need to install the dependencies:
 ```
-$ pip install pdf2image
-```
-```
-$ pip install scikit-image
+$ pip install pdf2image scikit-image numba
 ```
 
-Inside the repository create a directory that will receive the modified images:
-```
-$ mkdir jiangyi3
-```
 To execute:
 ```
-$ python watermark.py
+$ python watermark.py --source source.pdf --target out
 ```
-Don't forget to indicate the pdf's path you want to convert.
-
+Don't forget to indicate the pdf's path you want to convert, script will automatically creates an output path.
 
 ### Results
 ![image](./result.png)
