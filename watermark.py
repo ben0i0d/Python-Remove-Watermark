@@ -2,6 +2,7 @@ import os
 import numba
 import argparse
 import numpy as np
+from PIL import Image
 from skimage import io
 from pdf2image import convert_from_path
 
@@ -26,7 +27,16 @@ if __name__ == '__main__':
     if not os.path.exists(args.target):
         os.mkdir(args.target)
 
-    images = np.array(convert_from_path(args.source))
-
-    for i in range(len(images)):      
-        io.imsave(os.path.join(args.target,'{}.jpg').format(i+1), handle(images[i]))
+    fileext = os.path.splitext(os.path.basename(args.source))[1]
+    if fileext == '.jpg' :
+        img = io.imread(args.source)
+        io.imsave(os.path.join(args.target,'result{}'.format(fileext)), handle(img))
+    elif fileext == '.png':
+        img = np.array(Image.open(args.source).convert('RGB'))
+        io.imsave(os.path.join(args.target,'result{}'.format(fileext)), handle(img))
+    elif fileext == '.pdf':
+        imgs = np.array(convert_from_path(args.source))
+        for i in range(len(imgs)):
+            io.imsave(os.path.join(args.target,'{}.jpg').format(i+1), handle(imgs[i]))
+    else:
+        print('Unsupported file format')
